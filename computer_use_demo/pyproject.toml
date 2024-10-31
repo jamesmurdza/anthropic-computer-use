@@ -6,7 +6,7 @@ authors = ["James Murdza <james@jamesmurdza.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.11"
 streamlit = ">=1.38.0"
 anthropic = {version = ">=0.37.1", extras = ["bedrock", "vertex"]}
 jsonschema = "4.22.0"
