@@ -29,6 +29,8 @@ from anthropic.types.beta import (
     BetaToolUseBlockParam,
 )
 
+from DesktopSandbox import DesktopSandbox
+
 from .tools import BashTool, ComputerTool, EditTool, ToolCollection, ToolResult
 
 COMPUTER_USE_BETA_FLAG = "computer-use-2024-10-22"
@@ -72,6 +74,7 @@ SYSTEM_PROMPT = f"""<SYSTEM_CAPABILITY>
 
 async def sampling_loop(
     *,
+    desktop: DesktopSandbox,
     model: str,
     provider: APIProvider,
     system_prompt_suffix: str,
@@ -89,9 +92,9 @@ async def sampling_loop(
     Agentic sampling loop for the assistant/tool interaction of computer use.
     """
     tool_collection = ToolCollection(
-        ComputerTool(),
-        EditTool(),
+        ComputerTool(desktop),
         # BashTool(desktop),
+        EditTool(desktop),
     )
     system = BetaTextBlockParam(
         type="text",

@@ -4,6 +4,8 @@ from typing import Literal, get_args
 
 from anthropic.types.beta import BetaToolTextEditor20241022Param
 
+from DesktopSandbox import DesktopSandbox
+
 from .base import BaseAnthropicTool, CLIResult, ToolError, ToolResult
 from .run import maybe_truncate, run
 
@@ -25,11 +27,13 @@ class EditTool(BaseAnthropicTool):
 
     api_type: Literal["text_editor_20241022"] = "text_editor_20241022"
     name: Literal["str_replace_editor"] = "str_replace_editor"
+    sandbox: DesktopSandbox
 
     _file_history: dict[Path, list[str]]
 
-    def __init__(self):
+    def __init__(self, desktop: DesktopSandbox):
         self._file_history = defaultdict(list)
+        self.desktop = desktop
         super().__init__()
 
     def to_params(self) -> BetaToolTextEditor20241022Param:
@@ -85,22 +89,22 @@ class EditTool(BaseAnthropicTool):
         Check that the path/command combination is valid.
         """
         # Check if its an absolute path
-        if not path.is_absolute():
+        if not self.desktop.is_absolute(path):
             suggested_path = Path("") / path
             raise ToolError(
                 f"The path {path} is not an absolute path, it should start with `/`. Maybe you meant {suggested_path}?"
             )
         # Check if path exists
-        if not path.exists() and command != "create":
+        if not self.desktop.exists(path) and command != "create":
             raise ToolError(
                 f"The path {path} does not exist. Please provide a valid path."
             )
-        if path.exists() and command == "create":
+        if self.desktop.exists(path) and command == "create":
             raise ToolError(
                 f"File already exists at: {path}. Cannot overwrite files using command `create`."
             )
         # Check if the path points to a directory
-        if path.is_dir():
+        if self.desktop.is_dir(path):
             if command != "view":
                 raise ToolError(
                     f"The path {path} is a directory and only the `view` command can be used on directories"
@@ -108,7 +112,7 @@ class EditTool(BaseAnthropicTool):
 
     async def view(self, path: Path, view_range: list[int] | None = None):
         """Implement the view command"""
-        if path.is_dir():
+        if self.desktop.is_dir(path):
             if view_range:
                 raise ToolError(
                     "The `view_range` parameter is not allowed when `path` points to a directory."
@@ -255,14 +259,14 @@ class EditTool(BaseAnthropicTool):
     def read_file(self, path: Path):
         """Read the content of a file from a given path; raise a ToolError if an error occurs."""
         try:
-            return path.read_text()
+            return self.desktop.files.read(path)
         except Exception as e:
             raise ToolError(f"Ran into {e} while trying to read {path}") from None
 
     def write_file(self, path: Path, file: str):
         """Write the content of a file to a given path; raise a ToolError if an error occurs."""
         try:
-            path.write_text(file)
+            self.desktop.files.write(path, file)
         except Exception as e:
             raise ToolError(f"Ran into {e} while trying to write to {path}") from None
 

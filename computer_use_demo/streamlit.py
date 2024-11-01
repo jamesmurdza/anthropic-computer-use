@@ -22,6 +22,8 @@ from anthropic.types.beta import (
 )
 from streamlit.delta_generator import DeltaGenerator
 
+from DesktopSandbox import DesktopSandbox
+
 from computer_use_demo.loop import (
     PROVIDER_TO_DEFAULT_MODEL_NAME,
     APIProvider,
@@ -82,6 +84,8 @@ def setup_state():
         st.session_state.custom_system_prompt = load_from_storage("system_prompt") or ""
     if "hide_images" not in st.session_state:
         st.session_state.hide_images = False
+    if "desktop" not in st.session_state:
+        st.session_state.desktop = DesktopSandbox()
 
 
 def _reset_model():
@@ -212,6 +216,7 @@ async def main():
         with st.spinner("Running Agent..."):
             # run the agent sampling loop with the newest message
             st.session_state.messages = await sampling_loop(
+                desktop=st.session_state.desktop,
                 system_prompt_suffix=st.session_state.custom_system_prompt,
                 model=st.session_state.model,
                 provider=st.session_state.provider,
