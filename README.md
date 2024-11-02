@@ -1,6 +1,6 @@
 # Secure AI-controlled computer with E2B Sandbox and Anthropic's Claude
 
-A secure sandboxed cloud Linux computer powered by [E2B Desktop Sandbox](https://github.com/e2b-dev/desktop/) and controlled by Anthropic's Claude. Based on [the computer use demo](https://github.com/anthropics/anthropic-quickstarts/tree/main/computer-use-demo).
+A secure cloud Linux computer powered by [E2B Desktop Sandbox](https://github.com/e2b-dev/desktop/) and controlled by Anthropic's Claude. Based on [the computer use demo](https://github.com/anthropics/anthropic-quickstarts/tree/main/computer-use-demo).
 
 https://github.com/user-attachments/assets/07d42297-27f1-4119-8f4c-c102bf205b10
 
