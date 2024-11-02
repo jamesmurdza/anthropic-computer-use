@@ -100,7 +100,10 @@ async def main():
 
     st.markdown(STREAMLIT_STYLE, unsafe_allow_html=True)
 
-    st.title("Claude Computer Use Demo")
+    st.title("📦 Secure AI Computer Use")
+    st.markdown(
+        "This demo is built using [E2B cloud sandboxes](https://e2b.dev) and [Claude](https://claude.ai). Check out the source code [here](https://github.com/e2b-dev/secure-computer-use/). "
+    )
 
     if not os.getenv("HIDE_WARNING", False):
         st.warning(WARNING_TEXT)
