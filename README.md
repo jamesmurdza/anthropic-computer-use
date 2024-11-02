@@ -1,4 +1,4 @@
-# Secure Computer Use with E2B powered by Anthropic's Claude
+# Secure Computer Use with E2B Sandbox and Anthropic's Claude
 
 This proje allows you to spawn Ubuntu Linux systems in the cloud and automate them using AI agents. It uses Anthropic Claude for reasoning and [E2B Desktop](https://github.com/e2b-dev/desktop/) for the secure cloud sandboxes. It's based on [this computer use demo](https://github.com/anthropics/anthropic-quickstarts/tree/main/computer-use-demo) by Anthropic.
 
