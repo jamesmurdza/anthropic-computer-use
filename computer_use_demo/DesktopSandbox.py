@@ -1,16 +1,20 @@
 from e2b_desktop import Sandbox
+from pathlib import Path
+
 
 class DesktopSandbox(Sandbox):
-    def is_absolute(self, path: str) -> bool:
+    def is_absolute(self, path: Path) -> bool:
         """Check if the given path is absolute."""
-        return path.startswith("/")
+        return path.is_absolute()
 
-    def exists(self, path: str) -> bool:
+    def exists(self, path: Path) -> bool:
         """Check if the given path exists."""
-        result = self.commands.run(f"ls {path}")
-        return result.exitCode == 0
+        return self.files.exists(path.as_posix())
 
-    def is_dir(self, path: str) -> bool:
+    def is_dir(self, path: Path) -> bool:
         """Check if the given path points to a directory."""
-        result = self.commands.run(f"test -d {path}")
-        return result.exitCode == 0
+        try:
+            self.commands.run(f"test -d {path}")
+            return True
+        except Exception:
+            return False
