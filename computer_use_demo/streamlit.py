@@ -56,7 +56,7 @@ class Sender(StrEnum):
     TOOL = "tool"
 
 
-def setup_state():
+async def setup_state():
     if "messages" not in st.session_state:
         st.session_state.messages = []
     if "api_key" not in st.session_state:
@@ -85,7 +85,7 @@ def setup_state():
     if "hide_images" not in st.session_state:
         st.session_state.hide_images = False
     if "desktop" not in st.session_state:
-        st.session_state.desktop = DesktopSandbox()
+        st.session_state.desktop = await DesktopSandbox.create()
 
 
 def _reset_model():
@@ -96,7 +96,7 @@ def _reset_model():
 
 async def main():
     """Render loop for streamlit"""
-    setup_state()
+    await setup_state()
 
     st.markdown(STREAMLIT_STYLE, unsafe_allow_html=True)
 

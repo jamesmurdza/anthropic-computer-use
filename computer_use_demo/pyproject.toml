@@ -6,14 +6,14 @@ authors = ["James Murdza <james@jamesmurdza.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.13"
 streamlit = ">=1.38.0"
 anthropic = {version = ">=0.37.1", extras = ["bedrock", "vertex"]}
 jsonschema = "4.22.0"
 boto3 = ">=1.28.57"
 google-auth = ">=2,<3"
-e2b-desktop = "^0.0.1"
 python-dotenv = "^1.0.1"
+e2b = "^1.0.3"
 
 
 [build-system]

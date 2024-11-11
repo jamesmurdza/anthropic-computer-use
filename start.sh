@@ -1,5 +1,5 @@
 # Configure Poetry to use Python 3.11
-(cd ./computer_use_demo && poetry env use python3.11)
+(cd ./computer_use_demo && poetry env use python3.13)
 
 # Install project dependencies defined in ./computer_use_demo/pyproject.toml
 poetry install --no-root --directory ./computer_use_demo
